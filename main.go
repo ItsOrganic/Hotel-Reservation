@@ -45,8 +45,7 @@ func main() {
 
     //Hotel handlers
     apiv1.Get("/hotel",hotelHandler.HandleGetHotels)
-
-    app.Listen(*listenAddress)
+   app.Listen(*listenAddress)
 
 }
     func handleFoo(c *fiber.Ctx) error {

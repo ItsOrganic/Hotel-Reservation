@@ -1,7 +1,9 @@
 package api
 
 import (
-    "Hotel_Reservation_API/db"
+	"Hotel_Reservation_API/db"
+	"fmt"
+
 	"github.com/gofiber/fiber/v2"
 )
 type HotelHandler struct {
@@ -14,7 +16,19 @@ func NewHotelHandler(hs db.HotelStore, rs db.RoomStore) *HotelHandler {
         roomStore: rs,
     }
 }
+
+type HotelQueryParams struct {
+    Rooms bool
+    Rating int
+}
+
 func (h *HotelHandler) HandleGetHotels(c *fiber.Ctx)error{
+    var qparams HotelQueryParams
+    if err := c.QueryParser(&qparams); err != nil {
+        return err
+    }
+    fmt.Println(qparams)
+
     hotels, err := h.hotelStore.GetHotels(c.Context(), nil)
     if err != nil {
         return err
